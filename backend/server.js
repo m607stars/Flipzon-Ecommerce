@@ -4,6 +4,9 @@ import data from './data.js';
 const app = express();
 
 app.get('/api/products',(req,res)=>{
+    console.log('server.js');
+    console.log('sending');
+    console.log(data.products);
     res.send(data.products);
 })
 
