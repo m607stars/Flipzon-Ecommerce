@@ -4,7 +4,11 @@ import Rating from './Rating';
 export default function Product(props) {
     const {product} = props;
     console.log('Product.js');
-    console.log(props);
+    console.log(props); 
+    /*should be dictionary having two keys:
+    key,
+    product
+     */
 
     return (
         <div key={product._id} className="card">
