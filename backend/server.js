@@ -1,7 +1,20 @@
 import express from 'express';
 import data from './data.js';
+import mongoose from 'mongoose';
+import mongoURI from './keys.js';
+import userRouter from './routers/userRouter.js';
 
 const app = express();
+
+
+const db = mongoURI;
+
+mongoose.connect(db,{useUnifiedTopology:true,useNewUrlParser:true}).then(()=>{
+            console.log("MongoDB connected successfully")
+        })
+        .catch((err)=>{
+            console.log("Error has occurred while connecting to the database: ",err);
+        })
 
 app.get('/api/products/:id',(req,res)=>{
     console.log('server.js');
@@ -20,8 +33,14 @@ app.get('/api/products',(req,res)=>{
     res.send(data.products);
 });
 
+app.use('/api/users/',userRouter);
+
 app.get('/',(req,res)=>{
     res.send('Server is ready');
+});
+
+app.use((err,req,res,next) =>{
+    res.status(500).send({message:err.message});
 });
 
 const port = process.env.port || 5000;

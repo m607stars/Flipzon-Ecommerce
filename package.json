@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/m607stars/Flipzon-Ecommerce#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "mongoose": "^5.11.19",
     "react-scripts": "^4.0.3"
   },
   "devDependencies": {
