@@ -23,7 +23,7 @@ mongoose.connect(db,{useUnifiedTopology:true,useNewUrlParser:true}).then(()=>{
 
 app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);
-app.use('api/orders', orderRouter);
+app.use('/api/orders', orderRouter);
 app.get('/', (req, res) => {
     res.send('Server is ready');
 });
@@ -36,3 +36,4 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Serve at http://localhost:${port}`);
 });
+        
