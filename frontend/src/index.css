@@ -166,6 +166,9 @@ button.primary {
 button.block {
   width: 100%;
 }
+button.small {
+  font-size: 1.2rem;
+}
 
 .row.top {
   align-items: flex-start;
@@ -254,4 +257,26 @@ button.block {
 .checkout-steps > div.active {
   border-top-color: 0.3rem #f08000;
   color: #f08000;
+}
+
+/* Table */
+
+.table{
+  width:100%;
+  border-collapse: collapse;
+}
+
+.table tbody tr:nth-of-type(odd){
+  background-color: #f4f4f4;
+}
+
+.table td,
+.table th {
+  text-align: left;
+  border: 0.1 rem solid #e4e4e4;
+  padding: 0.5rem;
+}
+
+.table button{
+  margin: 0 0.2rem;
 }
