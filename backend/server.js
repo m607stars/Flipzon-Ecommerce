@@ -10,6 +10,7 @@ import orderRouter from './routers/orderRouter.js';
 const app = express();
 
 dotenv.config();
+
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 const db = mongoURI;
@@ -24,6 +25,7 @@ mongoose.connect(db,{useUnifiedTopology:true,useNewUrlParser:true}).then(()=>{
 app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);
 app.use('/api/orders', orderRouter);
+
 app.get('/', (req, res) => {
     res.send('Server is ready');
 });
@@ -33,6 +35,7 @@ app.use((err, req, res, next) => {
 });
 
 const port = process.env.PORT || 5000;
+
 app.listen(port, () => {
     console.log(`Serve at http://localhost:${port}`);
 });

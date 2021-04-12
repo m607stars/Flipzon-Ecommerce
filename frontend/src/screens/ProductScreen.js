@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { detailProducts } from '../actions/productActions';
+import { detailsProduct } from '../actions/productActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Rating from '../components/Rating';
@@ -17,7 +17,7 @@ export default function ProductScreen(props) {
   const { loading, error, product } = productDetails;
 
   useEffect(() =>{
-    dispatch(detailProducts(productId));
+    dispatch(detailsProduct(productId));
   }, [dispatch, productId]);
 
   const addToCartHandler = () => {
