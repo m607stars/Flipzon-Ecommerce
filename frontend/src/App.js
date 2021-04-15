@@ -17,6 +17,7 @@ import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import SigninScreen from './screens/SigninScreen';
 import ProductListScreen from './screens/ProductListScreen';
 import ProductEditScreen from './screens/ProductEditScreen';
+import OrderListScreen from './screens/OrderListScreen';
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -33,7 +34,7 @@ function App() {
         <header className="row">
           <div>
             <Link className="brand" to="/">
-              amazona
+              Flipzon
             </Link>
           </div>
           <div>
@@ -100,6 +101,7 @@ function App() {
           <PrivateRoute path="/profile" component={ProfileScreen}></PrivateRoute>
           <Route path="/" component={HomeScreen} exact></Route>
           <AdminRoute path="/productlist" component={ProductListScreen}></AdminRoute>
+          <AdminRoute path="/orderlist" component={OrderListScreen}></AdminRoute>
         </main>
         <footer className="row center">All right reserved</footer>
       </div>
