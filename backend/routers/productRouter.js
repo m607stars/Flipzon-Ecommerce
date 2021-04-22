@@ -10,8 +10,11 @@ productRouter.get(
   '/',
   expressAsyncHandler(async (req, res) => {
     const seller = req.query.seller || '';
-    const sellerFilter = seller? { seller}:{};
-    const products = await Product.find({...sellerFilter});
+    const sellerFilter = seller ? { seller } : {};
+    const products = await Product.find({ ...sellerFilter }).populate(
+      'seller',
+      'seller.name seller.logo'
+    );
     res.send(products);
   })
 );
@@ -28,7 +31,10 @@ productRouter.get(
 productRouter.get(
   '/:id',
   expressAsyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate(
+      'seller',
+      'seller.name seller.logo seller.rating seller.numReviews'
+    );
     if (product) {
       res.send(product);
     } else {
@@ -85,14 +91,13 @@ productRouter.delete(
   '/:id',
   isAuth,
   isAdmin,
-  expressAsyncHandler(async(req,res) =>{
+  expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
-    if(product){
-      const deletedProduct = await product.remove();
-      res.send({message: 'Product Deleted',product:deletedProduct})
-    }
-    else{
-      res.status(404).send({message:'Product not found'});
+    if (product) {
+      const deleteProduct = await product.remove();
+      res.send({ message: 'Product Deleted', product: deleteProduct });
+    } else {
+      res.status(404).send({ message: 'Product Not Found' });
     }
   })
 );
