@@ -118,8 +118,8 @@ function App() {
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
           <PrivateRoute path="/profile" component={ProfileScreen}></PrivateRoute>
           <Route path="/" component={HomeScreen} exact></Route>
-          <AdminRoute path="/productlist" component={ProductListScreen}></AdminRoute>
-          <AdminRoute path="/orderlist" component={OrderListScreen}></AdminRoute>
+          <AdminRoute path="/productlist" component={ProductListScreen} exact></AdminRoute> 
+          <AdminRoute path="/orderlist" component={OrderListScreen} exact></AdminRoute>
           <AdminRoute path='/userList' component={UserListScreen}></AdminRoute>
           <AdminRoute
             path="/user/:id/edit"
