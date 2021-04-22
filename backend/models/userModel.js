@@ -5,7 +5,14 @@ const userSchema = new mongoose.Schema({
     email:{type:String, req:true, unique:true},
     password:{type: String, req:true},
     isAdmin:{type:Boolean, default:false, required:true},
-    isSeller:{type:Boolean, default:false, required:true}
+    isSeller:{type:Boolean, default:false, required:true},
+    seller:{
+        name:String,
+        logo:String,
+        description:String,
+        rating:{ type: Number, default: 0, required: true },
+        numReview:{ type:Number, default:0, required:true },
+    }
 }, {
     timestamps:true
 }) 
