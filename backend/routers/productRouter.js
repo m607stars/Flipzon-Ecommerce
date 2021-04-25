@@ -102,6 +102,7 @@ productRouter.post(
     res.send({ message: 'Product Created', product: createdProduct });
   })
 );
+
 productRouter.put(
   '/:id',
   isAuth,
@@ -109,7 +110,7 @@ productRouter.put(
   expressAsyncHandler(async (req, res) => {
     const productId = req.params.id;
     const product = await Product.findById(productId);
-    if (product) {
+    if (product) {   
       product.name = req.body.name;
       product.price = req.body.price;
       product.image = req.body.image;
