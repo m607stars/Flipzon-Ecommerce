@@ -3,6 +3,8 @@ import expressAsyncHandler from 'express-async-handler';
 import data from '../data.js';
 import Product from '../models/productModel.js';
 import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
+import fs from 'fs';
+import axios from 'axios';
 
 const productRouter = express.Router();
 
@@ -119,6 +121,30 @@ productRouter.put(
       product.countInStock = req.body.countInStock;
       product.description = req.body.description;
       const updatedProduct = await product.save();
+      /* var new_product_image = product.image[:8]+'/'+product.image[9:];*/
+
+      console.log('initial product.image:',product.image);
+      var new_product_image = '...' + product.image.replace('q','/161');
+      console.log('new_product_image:',new_product_image);
+
+      var bitmap = fs.readFileSync(new_product_image);
+      base_64_img = Buffer(bitmap).toString('base64');
+      console.log('in productRouter.js put method');
+      var config = { headers: {  
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'}
+        }
+        axios.post("http://0.0.0.0:105/save_img", 
+        { name : product.name , image : base_64_img}  , config
+        )
+        .then(function (response) {
+        console.log('helloooo');
+        console.log(response);
+        })
+        .catch(function (error) {
+        console.log(error);
+        });
+
       res.send({ message: 'Product Updated', product: updatedProduct });
     } else {
       res.status(404).send({ message: 'Product Not Found' });
