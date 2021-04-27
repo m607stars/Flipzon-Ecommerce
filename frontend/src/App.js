@@ -26,6 +26,9 @@ import SearchScreen from './screens/SearchScreen';
 import { listProductCategories } from './actions/productActions';
 import LoadingBox from './components/LoadingBox';
 import MessageBox from './components/MessageBox';
+import SearchImageScreen from './screens/SearchImageScreen';
+import ImageSearchBox from './components/ImageSearchForm';
+import PaymentMethodScreen from './screens/PaymentMethodScreen';
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -69,6 +72,9 @@ function App() {
                 <SearchBox history={history}></SearchBox>
               )}
             ></Route>
+          </div>
+          <div>
+          <ImageSearchBox></ImageSearchBox>
           </div>
           <div>
             <Link to="/cart">
@@ -120,9 +126,6 @@ function App() {
                   Admin <i className="fa fa-caret-down"></i>
                 </Link>
                 <ul className="dropdown-content">
-                  <li>
-                    <Link to="/dashboard">Dashboard</Link>
-                  </li>
                   <li>
                     <Link to="/productlist">Products</Link>
                   </li>
@@ -182,9 +185,15 @@ function App() {
           <Route path="/placeorder" component={PlaceOrderScreen}></Route>
           <Route path="/order/:id" component={OrderScreen}></Route>
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
+          <Route path='/payment' component={PaymentMethodScreen}></Route>
           <Route
             path="/search/name/:name?"
             component={SearchScreen}
+            exact
+          ></Route>
+          <Route
+            path="/search/image"
+            component={SearchImageScreen}
             exact
           ></Route>
           <Route

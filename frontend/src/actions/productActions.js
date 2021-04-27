@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { getSalt } from 'bcryptjs';
 import {
   PRODUCT_CREATE_FAIL,
   PRODUCT_CREATE_REQUEST,
@@ -21,6 +22,9 @@ import {
   PRODUCT_REVIEW_CREATE_REQUEST,
   PRODUCT_REVIEW_CREATE_SUCCESS,
   PRODUCT_REVIEW_CREATE_FAIL,
+  PRODUCT_IMG_SEARCH_REQUEST,
+  PRODUCT_IMG_SEARCH_SUCCESS,
+  PRODUCT_IMG_SEARCH_FAIL,
 } from '../constants/productConstants';
 
 export const listProducts = ({
@@ -159,5 +163,34 @@ export const createReview = (productId, review) => async (
         ? error.response.data.message
         : error.message;
     dispatch({ type: PRODUCT_REVIEW_CREATE_FAIL, payload: message });
+  }
+};
+
+export const searchImage = ({imagePath}) => async (
+  dispatch,
+  getState
+) => {
+  dispatch({ type: PRODUCT_IMG_SEARCH_REQUEST });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.post(
+      `/api/products/search_image`,
+      {searchImagePath:imagePath},
+      {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+      }
+    );
+    dispatch({
+      type: PRODUCT_IMG_SEARCH_SUCCESS,
+      payload: data.products,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: PRODUCT_IMG_SEARCH_FAIL, payload: message });
   }
 };

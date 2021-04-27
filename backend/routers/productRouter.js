@@ -59,6 +59,28 @@ productRouter.get(
   })
 );
 
+productRouter.post(
+  '/search_image',
+  expressAsyncHandler(async (req,res) => {
+      const image = req.body.searchImagePath;
+      console.log(image);
+      var config = { headers: {  
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'}
+      }
+      var new_product_image =  image.replace('q','/161');
+      new_product_image = new_product_image.slice(1,-1) + 'g';
+      var bitmap = fs.readFileSync(new_product_image);
+      var base_64_img = bitmap.toString('base64');
+      const flask_response = await axios.post('http://0.0.0.0:5001/search_img/',
+       {image: base_64_img},config 
+      );
+      const image_ids = flask_response.data.similar_images;
+      const products = await Product.find().where('image').in(image_ids);
+      res.send({products});
+  })
+);
+
 productRouter.get(
   '/seed',
   expressAsyncHandler(async (req, res) => {
@@ -121,28 +143,22 @@ productRouter.put(
       product.countInStock = req.body.countInStock;
       product.description = req.body.description;
       const updatedProduct = await product.save();
-      /* var new_product_image = product.image[:8]+'/'+product.image[9:];*/
 
-      console.log('initial product.image:',product.image);
-      var new_product_image = '...' + product.image.replace('q','/161');
-      console.log('new_product_image:',new_product_image);
-
+      var new_product_image =  product.image.replace('q','/161');
+      new_product_image = new_product_image.slice(1,-1) + 'g';
       var bitmap = fs.readFileSync(new_product_image);
-      base_64_img = Buffer(bitmap).toString('base64');
-      console.log('in productRouter.js put method');
+      var base_64_img = bitmap.toString('base64');
       var config = { headers: {  
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'}
         }
-        axios.post("http://0.0.0.0:105/save_img", 
-        { name : product.name , image : base_64_img}  , config
+        axios.post("http://0.0.0.0:5001/save_img/", 
+        { name : new_product_image , image : base_64_img}  , config
         )
         .then(function (response) {
-        console.log('helloooo');
-        console.log(response);
         })
         .catch(function (error) {
-        console.log(error);
+        
         });
 
       res.send({ message: 'Product Updated', product: updatedProduct });

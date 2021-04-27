@@ -24,6 +24,9 @@ const {
   PRODUCT_REVIEW_CREATE_SUCCESS,
   PRODUCT_REVIEW_CREATE_FAIL,
   PRODUCT_REVIEW_CREATE_RESET,
+  PRODUCT_IMG_SEARCH_REQUEST,
+  PRODUCT_IMG_SEARCH_SUCCESS,
+  PRODUCT_IMG_SEARCH_FAIL,
 } = require('../constants/productConstants');
 
 export const productListReducer = (
@@ -122,6 +125,20 @@ export const productReviewCreateReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case PRODUCT_REVIEW_CREATE_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+
+
+export const productImageSearchReducer = (state = {products: [],loading:true}, action) => {
+  switch (action.type) {
+    case PRODUCT_IMG_SEARCH_REQUEST:
+      return { loading: true };
+    case PRODUCT_IMG_SEARCH_SUCCESS:
+      return { loading: false, success: true, products: action.payload };
+    case PRODUCT_IMG_SEARCH_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

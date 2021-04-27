@@ -10,7 +10,7 @@ import { prices, ratings } from '../utils';
 
 export default function SearchScreen(props) {
   const {
-    name = 'all',
+    name = 'all', 
     category = 'all',
     min = 0,
     max = 0,
@@ -49,6 +49,8 @@ export default function SearchScreen(props) {
     const filterMax = filter.max ? filter.max : filter.max === 0 ? 0 : max;
     return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}`;
   };
+
+
   return (
     <div>
       <div className="row">
